@@ -2,6 +2,6 @@
 {
     public interface IDbFactory
     {
-        ShoppingKartEntities Init();
+        ShoppingKartContext Init();
     }
 }

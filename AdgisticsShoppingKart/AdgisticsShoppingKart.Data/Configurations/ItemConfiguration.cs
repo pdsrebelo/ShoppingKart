@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using AdgisticsShoppingKart.Model;
 
 namespace AdgisticsShoppingKart.Data.Configurations
@@ -8,7 +9,13 @@ namespace AdgisticsShoppingKart.Data.Configurations
         public ItemConfiguration()
         {
             ToTable("Items");
-            Property(c => c.Id).IsRequired();
+
+            HasKey(c => c.Id);
+
+            Property(c => c.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            HasRequired(c1 => c1.Offer).WithRequiredPrincipal(c2 => c2.Item);
         }
     }
 }

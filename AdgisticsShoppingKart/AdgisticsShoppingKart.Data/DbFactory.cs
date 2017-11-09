@@ -4,11 +4,11 @@ namespace AdgisticsShoppingKart.Data
 {
     public class DbFactory : IDbFactory
     {
-        private ShoppingKartEntities _dbContext;
+        private ShoppingKartContext _dbContext;
 
-        public ShoppingKartEntities Init()
+        public ShoppingKartContext Init()
         {
-            return _dbContext ?? (_dbContext = new ShoppingKartEntities());
+            return _dbContext ?? (_dbContext = new ShoppingKartContext());
         }
     }
 }

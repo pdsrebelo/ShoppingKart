@@ -8,8 +8,8 @@ namespace AdgisticsShoppingKart.Data.Configurations
         public OfferConfiguration()
         {
             ToTable("Offers");
+            HasKey(c => c.Id);
             Property(c => c.Id).IsRequired();
-            Property(c => c.ItemId).IsRequired();
         }
     }
 }

@@ -4,9 +4,9 @@ using AdgisticsShoppingKart.Model;
 
 namespace AdgisticsShoppingKart.Data
 {
-    public class ShoppingKartEntities : DbContext
+    public class ShoppingKartContext : DbContext
     {
-        public ShoppingKartEntities() : base("ShoppingKartEntities") { }
+        public ShoppingKartContext() : base("ShoppingKartEntities") { }
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Offer> Offers { get; set; }

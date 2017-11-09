@@ -7,7 +7,7 @@ namespace AdgisticsShoppingKart.Data
 {
     public abstract class RepositoryBase<T> where T : class
     {
-        private ShoppingKartEntities _dataContext;
+        private ShoppingKartContext _dataContext;
         private readonly IDbSet<T> _dbSet;
 
         protected IDbFactory DbFactory
@@ -16,7 +16,7 @@ namespace AdgisticsShoppingKart.Data
             private set;
         }
 
-        protected ShoppingKartEntities DbContext
+        protected ShoppingKartContext DbContext
         {
             get { return _dataContext ?? (_dataContext = DbFactory.Init()); }
         }
