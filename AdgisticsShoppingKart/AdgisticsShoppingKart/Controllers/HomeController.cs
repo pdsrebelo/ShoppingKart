@@ -1,19 +1,33 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using AdgisticsShoppingKart.Model;
+using AdgisticsShoppingKart.Models;
+using AdgisticsShoppingKart.Service;
+using AutoMapper;
 
 namespace AdgisticsShoppingKart.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly IItemService _itemService;
+
+        public HomeController()
         {
-            return View();
         }
 
-        public ActionResult ShoppingCart()
+        public HomeController(IItemService itemService)
         {
-            ViewBag.Message = "Your shopping cart.";
+            _itemService = itemService;
+        }
 
-            return View();
+        public ActionResult Index()
+        {
+            IEnumerable<Item> items = _itemService.GetItems().ToList();
+
+            IEnumerable<ItemModel> modelItems = Mapper.Map<IEnumerable<Item>, IEnumerable<ItemModel>>(items);
+
+            return View(modelItems);
         }
     }
 }

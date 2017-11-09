@@ -6,14 +6,14 @@ namespace AdgisticsShoppingKart.Mappings
 {
     public class DomainToViewModelMappingProfile : Profile
     {
+        public DomainToViewModelMappingProfile()
+        {
+            CreateMap<Item, ItemModel>();
+        }
+
         public override string ProfileName
         {
             get { return "DomainToViewModelMappings"; }
         }
-
-//        protected override void Configure()
-//        {
-//            CreateMap<Item, ItemModel>();
-//        }
     }
 }

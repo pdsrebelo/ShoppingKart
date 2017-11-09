@@ -9,7 +9,6 @@ namespace AdgisticsShoppingKart.Data
         public ShoppingKartEntities Init()
         {
             return _dbContext ?? (_dbContext = new ShoppingKartEntities());
-
         }
     }
 }

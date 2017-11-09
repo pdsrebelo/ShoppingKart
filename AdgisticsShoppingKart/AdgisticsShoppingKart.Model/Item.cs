@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdgisticsShoppingKart.Model
 {
@@ -10,5 +11,8 @@ namespace AdgisticsShoppingKart.Model
         public string Name { get; set; }
 
         public decimal Value { get; set; }
+
+        // TODO: Check whether I need this or not
+//        public ICollection<Offer> Offers { get; set; }
     }
 }

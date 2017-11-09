@@ -1,14 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AdgisticsShoppingKart.Model
 {
     public class Offer
     {
-        [ForeignKey(nameof(Item.Id))]
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey(nameof(Item))]
         public int ItemId { get; set; }
 
         public int Quantity { get; set; }
 
-        public decimal Price { get; set; }
+        public decimal Value { get; set; }
+
+        public Item Item { get; set; }
     }
 }

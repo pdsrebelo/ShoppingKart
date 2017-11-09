@@ -3,12 +3,13 @@ using AdgisticsShoppingKart.Model;
 
 namespace AdgisticsShoppingKart.Data.Configurations
 {
-    public class OfferConfiguration : EntityTypeConfiguration<Item>
+    public class OfferConfiguration : EntityTypeConfiguration<Offer>
     {
         public OfferConfiguration()
         {
             ToTable("Offers");
             Property(c => c.Id).IsRequired();
+            Property(c => c.ItemId).IsRequired();
         }
     }
 }
