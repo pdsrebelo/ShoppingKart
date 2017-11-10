@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdgisticsShoppingKart.Models.ItemViewModel>
+﻿@model AdgisticsShoppingKart.Models.ItemsAndCartViewModel
 
 @{
     ViewBag.Title = "Home Page";
@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.Items)
                         {
                             <tr>
                                 <td>@item.Name</td>
@@ -34,7 +34,8 @@
                                 }
                                 @Html.HiddenFor(m => item.Id)
                                 <td>
-                                    <button type="button" class="btn btn-success">+</button> <button type="button" class="btn btn-danger">-</button>
+                                    <input id="addItem_@item.Name" type="number" min="0" step="1" class="input-sm" />
+                                    <button name="addItem" value="@item.Name" type="button" class="btn btn-sm btn-success">+</button>
                                 </td>
                             </tr>
                         }
@@ -49,6 +50,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Value</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,6 +58,9 @@
                             <td>3</td>
                             <td>A</td>
                             <td>13.00</td>
+                            <td>
+                                <button name="removeItem" value="" type="button" class="btn btn-sm btn-danger">-</button>
+                            </td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -69,3 +74,33 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("button[name='addItem']").click(function() {
+            var name = $(this).val();
+            var quantity = $("#addItem_" + name).val();
+
+            if (quantity > 0) {
+                $.ajax({
+                    url: '@Url.Action("AddItem", "Home")',
+                    data: { name: name, quantity: quantity },
+                    success: function (result) {
+                        
+                    }});
+            }
+        });
+
+        $("button[name='removeItem']").click(function () {
+            console.log("Removing item: " + $(this).val());
+            var name = $(this).val();
+
+                $.ajax({
+                    url: '@Url.Action("RemoveItem", "Home")',
+                    data: { name: name },
+                    success: function (result) {
+                        
+                }});
+        });
+    });
+</script>
