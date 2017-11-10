@@ -1,13 +1,11 @@
-﻿namespace AdgisticsShoppingKart.Model
+﻿namespace AdgisticsShoppingKart.Models
 {
-    public class Offer
+    public class OfferViewModel
     {
         public int Id { get; set; }
 
         public int Quantity { get; set; }
 
         public decimal Value { get; set; }
-
-        public virtual Item Item { get; set; }
     }
 }

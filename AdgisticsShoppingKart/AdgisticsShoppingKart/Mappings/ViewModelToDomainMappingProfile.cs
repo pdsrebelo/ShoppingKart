@@ -8,7 +8,9 @@ namespace AdgisticsShoppingKart.Mappings
     {
         public ViewModelToDomainMappingProfile()
         {
-            CreateMap<ItemModel, Item>();
+            CreateMap<OfferViewModel, Offer>();
+            CreateMap<ItemViewModel, Item>()
+                .ForMember(c => c.Offer, opt => opt.MapFrom(src => Mapper.Map<OfferViewModel, Offer>(src.OfferView)));
         }
 
         public override string ProfileName

@@ -25,7 +25,7 @@ namespace AdgisticsShoppingKart.Controllers
         {
             IEnumerable<Item> items = _itemService.GetItems().ToList();
 
-            IEnumerable<ItemModel> modelItems = Mapper.Map<IEnumerable<Item>, IEnumerable<ItemModel>>(items);
+            IEnumerable<ItemViewModel> modelItems = Mapper.Map<IEnumerable<Item>, IEnumerable<ItemViewModel>>(items);
 
             return View(modelItems);
         }
