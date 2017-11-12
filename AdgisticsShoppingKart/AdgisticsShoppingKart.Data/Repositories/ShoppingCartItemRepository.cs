@@ -1,4 +1,5 @@
-﻿using AdgisticsShoppingKart.Data.Interfaces;
+﻿using System.Linq;
+using AdgisticsShoppingKart.Data.Interfaces;
 using AdgisticsShoppingKart.Model;
 
 namespace AdgisticsShoppingKart.Data.Repositories
@@ -7,9 +8,15 @@ namespace AdgisticsShoppingKart.Data.Repositories
     {
         public ShoppingCartItemRepository(IDbFactory dbFactory)
             : base(dbFactory) { }
+
+        public ShoppingCartItem GetByName(string name)
+        {
+            return DbContext.ShoppingCartItems.SingleOrDefault(m => m.Name == name);
+        }
     }
 
     public interface IShoppingCartItemRepository : IRepository<ShoppingCartItem>
     {
+        ShoppingCartItem GetByName(string name);
     }
 }

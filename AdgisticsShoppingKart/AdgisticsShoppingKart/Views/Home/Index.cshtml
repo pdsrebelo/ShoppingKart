@@ -58,11 +58,11 @@
                         {
                             foreach (var shoppingCartItem in Model.ShoppingCart.Items)
                             {
-                                <tr id="shoppingCartItem_@shoppingCartItem.Id">
+                                <tr id="shoppingCartItem_@shoppingCartItem.Name">
                                     <td name="quantity">@shoppingCartItem.Quantity</td>
                                     <td>@shoppingCartItem.Name</td>
                                     <td>
-                                        <button name="removeItem" value="@shoppingCartItem.Id" type="button" class="btn btn-sm btn-danger">-</button>
+                                        <button name="removeItem" value="@shoppingCartItem.Name" type="button" class="btn btn-sm btn-danger">-</button>
                                     </td>
                                 </tr>
                             }
@@ -87,8 +87,7 @@
             addItemClick(
                 $(this),
                 '@Url.Action("AddItemToShoppingCart", "Home")',
-                '@Url.Action("RemoveFromShoppingCart", "Home")'
-            );
+                '@Url.Action("RemoveFromShoppingCart", "Home")');
         });
         $("button[name='removeItem']").click(function() {
             removeItemClick($(this), '@Url.Action("RemoveFromShoppingCart", "Home")');

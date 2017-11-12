@@ -19,7 +19,7 @@ namespace AdgisticsShoppingKart.Service
 
         public ShoppingCartItem AddOrUpdateShoppingCartItem(ShoppingCartItem shoppingCartItem, string shoppingCartGuid)
         {
-            ShoppingCartItem dbItem = _shoppingCartItemRepository.GetById(shoppingCartItem.Id);
+            ShoppingCartItem dbItem = _shoppingCartItemRepository.GetByName(shoppingCartItem.Name);
             shoppingCartItem.ShoppingCartGuid = shoppingCartGuid;
 
             if (dbItem == null)
@@ -46,6 +46,17 @@ namespace AdgisticsShoppingKart.Service
         public void EditShoppingCartItem(ShoppingCartItem shoppingCartItem)
         {
             _shoppingCartItemRepository.Update(shoppingCartItem);
+        }
+
+        public bool DeleteShoppingCartItemByName(string name)
+        {
+            ShoppingCartItem dbItem = _shoppingCartItemRepository.GetByName(name);
+
+            if (dbItem == null)
+                return false;
+
+            _shoppingCartItemRepository.Delete(dbItem);
+            return true;
         }
 
         public void DeleteShoppingCartItem(ShoppingCartItem shoppingCartItem)

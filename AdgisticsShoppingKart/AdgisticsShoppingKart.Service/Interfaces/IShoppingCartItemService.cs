@@ -15,6 +15,8 @@ namespace AdgisticsShoppingKart.Service.Interfaces
 
         void DeleteShoppingCartItem(ShoppingCartItem shoppingCartItem);
 
+        bool DeleteShoppingCartItemByName(string name);
+
         void SaveShoppingCartItem();
     }
 }

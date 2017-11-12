@@ -10,18 +10,18 @@
                 url: addUrl,
                 data: objData,
                 success: function (result) {
-                    var tr = $('#shoppingCartItem_' + result.Id);
+                    var tr = $('#shoppingCartItem_' + result.Name);
 
                     // Bind the result to the shopping cart area
                     if (tr.length > 0) {
                         tr.find("td[name='quantity']").text(result.Quantity);
                     } else {
                         $("#shoppingCartItems").append(
-                            '<tr id="shoppingCartItem_' + result.Id + '">' +
+                            '<tr id="shoppingCartItem_' + result.Name + '">' +
                                 '<td name="quantity">' + result.Quantity + '</td>' +
                                 '<td>' + result.Name + '</td>' +
                                 '<td>' +
-                                    '<button name="removeItem" value="' + result.Id + '" type="button" class="btn btn-sm btn-danger">-</button>' + 
+                                    '<button name="removeItem" value="' + result.Name + '" type="button" class="btn btn-sm btn-danger">-</button>' + 
                                 '</td>' +
                             '</tr>');
 
@@ -36,20 +36,15 @@
 }
 
 function removeItemClick(elem, url) {
-    var id = elem.val();
-    console.log("Removing item: " + id);
-
-    if (id) {
+    var name = elem.val();
+    if (name) {
         $.ajax({
             url: url,
-            data: { id: id },
+            data: { name: name },
             success: function (result) {
                 if (result.success === true) {
-                    console.log("removing: " + id);
-                    console.log($('#shoppingCartItem_' + id));
-
                     // Remove this item from the list
-                    $('#shoppingCartItem_' + id).remove();
+                    $('#shoppingCartItem_' + name).remove();
                 }
             }
         });

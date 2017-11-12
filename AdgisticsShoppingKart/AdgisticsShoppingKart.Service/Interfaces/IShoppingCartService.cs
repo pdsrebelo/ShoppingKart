@@ -11,8 +11,6 @@ namespace AdgisticsShoppingKart.Service.Interfaces
 
         IEnumerable<ShoppingCart> GetShoppingCarts();
 
-//        ShoppingCartItem EditShoppingCart(ShoppingCart shoppingCart, ShoppingCartItem item);
-
         bool DeleteItem(ShoppingCart shoppingCart, int id);
 
         void DeleteShoppingCart(ShoppingCart shoppingCart);

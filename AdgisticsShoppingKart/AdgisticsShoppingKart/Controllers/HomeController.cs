@@ -33,13 +33,11 @@ namespace AdgisticsShoppingKart.Controllers
 
             ShoppingCartViewModel cartModel = Mapper.Map<ShoppingCart, ShoppingCartViewModel>(shoppingCart);
 
-            var model = new ItemsAndCartViewModel
+            return View(new ItemsAndCartViewModel
             {
                 Items = modelItems,
                 ShoppingCart = cartModel
-            };
-
-            return View(model);
+            });
         }
 
         public JsonResult AddItemToShoppingCart(ShoppingCartItemViewModel itemModel)
@@ -56,14 +54,14 @@ namespace AdgisticsShoppingKart.Controllers
             return Json(newModel, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult RemoveFromShoppingCart(int id)
+        public JsonResult RemoveFromShoppingCart(string name)
         {
             // Check if there's a cart for this session
             ShoppingCart shoppingCart = _shoppingCartService.GetShoppingCart(CookieFactory.GetShoppingCartCookie(Request, Response));
 
             if (shoppingCart != null)
             {
-                bool success = true; // _shoppingCartItemService.DeleteShoppingCartItemById(id);
+                bool success = _shoppingCartItemService.DeleteShoppingCartItemByName(name);
                 _shoppingCartService.SaveShoppingCart();
 
                 return Json(new { success = success }, JsonRequestBehavior.AllowGet);
