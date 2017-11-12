@@ -6,8 +6,6 @@ namespace AdgisticsShoppingKart.Models
     {
         public IEnumerable<ShoppingCartItemViewModel> Items { get; set; }
 
-        public decimal Total { get; set; }
-
         public ShoppingCartViewModel()
         {
             Items = new List<ShoppingCartItemViewModel>();

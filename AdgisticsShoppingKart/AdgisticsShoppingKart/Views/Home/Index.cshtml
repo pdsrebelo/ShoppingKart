@@ -49,7 +49,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Price</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -70,8 +70,8 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td>TOTAL</td>
-                            <td>@Model.ShoppingCart.Total</td>
+                            <td>Total: </td>
+                            <td id="shoppingCartTotal">@Model.Total</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -89,7 +89,7 @@
                 '@Url.Action("AddItemToShoppingCart", "Home")',
                 '@Url.Action("RemoveFromShoppingCart", "Home")');
         });
-        $("button[name='removeItem']").click(function() {
+        $("button[name='removeItem']").click(function () {
             removeItemClick($(this), '@Url.Action("RemoveFromShoppingCart", "Home")');
         });
     });

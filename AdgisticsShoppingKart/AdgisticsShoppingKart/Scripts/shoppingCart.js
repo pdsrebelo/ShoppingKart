@@ -10,18 +10,18 @@
                 url: addUrl,
                 data: objData,
                 success: function (result) {
-                    var tr = $('#shoppingCartItem_' + result.Name);
+                    var tr = $('#shoppingCartItem_' + result.newModel.Name);
 
                     // Bind the result to the shopping cart area
                     if (tr.length > 0) {
-                        tr.find("td[name='quantity']").text(result.Quantity);
+                        tr.find("td[name='quantity']").text(result.newModel.Quantity);
                     } else {
                         $("#shoppingCartItems").append(
-                            '<tr id="shoppingCartItem_' + result.Name + '">' +
-                                '<td name="quantity">' + result.Quantity + '</td>' +
-                                '<td>' + result.Name + '</td>' +
+                            '<tr id="shoppingCartItem_' + result.newModel.Name + '">' +
+                                '<td name="quantity">' + result.newModel.Quantity + '</td>' +
+                                '<td>' + result.newModel.Name + '</td>' +
                                 '<td>' +
-                                    '<button name="removeItem" value="' + result.Name + '" type="button" class="btn btn-sm btn-danger">-</button>' + 
+                                    '<button name="removeItem" value="' + result.newModel.Name + '" type="button" class="btn btn-sm btn-danger">-</button>' + 
                                 '</td>' +
                             '</tr>');
 
@@ -29,6 +29,9 @@
                             removeItemClick($(this), removeUrl);
                         });
                     }
+
+                    // Update the shopping cart total
+                    $("#shoppingCartTotal").text(result.total.toFixed(2));
                 }
             });
         }
@@ -45,6 +48,9 @@ function removeItemClick(elem, url) {
                 if (result.success === true) {
                     // Remove this item from the list
                     $('#shoppingCartItem_' + name).remove();
+
+                    // Update the shopping cart total
+                    $("#shoppingCartTotal").text(result.total.toFixed(2));
                 }
             }
         });

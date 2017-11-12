@@ -11,12 +11,14 @@ namespace AdgisticsShoppingKart.Tests.Controllers
     public class HomeControllerTest
     {
         private readonly IItemService _itemService;
+        private readonly IOfferService _offerService;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IShoppingCartItemService _shoppingCartItemService;
 
-        public HomeControllerTest(IItemService itemService, IShoppingCartService shoppingCartService, IShoppingCartItemService shoppingCartItemService)
+        public HomeControllerTest(IItemService itemService, IOfferService offerService, IShoppingCartService shoppingCartService, IShoppingCartItemService shoppingCartItemService)
         {
             _itemService = itemService;
+            _offerService = offerService;
             _shoppingCartService = shoppingCartService;
             _shoppingCartItemService = shoppingCartItemService;
         }
@@ -31,7 +33,7 @@ namespace AdgisticsShoppingKart.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController(_itemService, _shoppingCartService, _shoppingCartItemService);
+            HomeController controller = new HomeController(_itemService, _offerService, _shoppingCartService, _shoppingCartItemService);
 
             // Act
             ViewResult result = controller.Index() as ViewResult;

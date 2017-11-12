@@ -11,12 +11,14 @@ namespace AdgisticsShoppingKart.Controllers
     public class HomeController : Controller
     {
         private readonly IItemService _itemService;
+        private readonly IOfferService _offerService;
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IShoppingCartItemService _shoppingCartItemService;
 
-        public HomeController(IItemService itemService, IShoppingCartService shoppingCartService, IShoppingCartItemService shoppingCartItemService)
+        public HomeController(IItemService itemService, IOfferService offerService, IShoppingCartService shoppingCartService, IShoppingCartItemService shoppingCartItemService)
         {
             _itemService = itemService;
+            _offerService = offerService;
             _shoppingCartService = shoppingCartService;
             _shoppingCartItemService = shoppingCartItemService;
         }
@@ -36,7 +38,8 @@ namespace AdgisticsShoppingKart.Controllers
             return View(new ItemsAndCartViewModel
             {
                 Items = modelItems,
-                ShoppingCart = cartModel
+                ShoppingCart = cartModel,
+                Total = _offerService.GetTotal(shoppingCart, items)
             });
         }
 
@@ -51,7 +54,9 @@ namespace AdgisticsShoppingKart.Controllers
 
             ShoppingCartItemViewModel newModel = Mapper.Map<ShoppingCartItem, ShoppingCartItemViewModel>(retItem);
 
-            return Json(newModel, JsonRequestBehavior.AllowGet);
+            decimal total = _offerService.GetTotal(shoppingCart, _itemService.GetItems());
+
+            return Json(new { newModel, total = total }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult RemoveFromShoppingCart(string name)
@@ -64,7 +69,9 @@ namespace AdgisticsShoppingKart.Controllers
                 bool success = _shoppingCartItemService.DeleteShoppingCartItemByName(name);
                 _shoppingCartService.SaveShoppingCart();
 
-                return Json(new { success = success }, JsonRequestBehavior.AllowGet);
+                decimal total = _offerService.GetTotal(shoppingCart, _itemService.GetItems());
+
+                return Json(new { success = success, total = total }, JsonRequestBehavior.AllowGet);
             }
 
             return Json(null, JsonRequestBehavior.AllowGet);

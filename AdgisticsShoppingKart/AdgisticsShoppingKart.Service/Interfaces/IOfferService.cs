@@ -13,6 +13,8 @@ namespace AdgisticsShoppingKart.Service.Interfaces
 
         void DeleteOffer(Offer offer);
 
+        decimal GetTotal(ShoppingCart shoppingCart, IEnumerable<Item> items);
+
         void SaveOffer();
     }
 }
