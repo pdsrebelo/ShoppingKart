@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AdgisticsShoppingKart.Model;
 
-namespace AdgisticsShoppingKart.Service
+namespace AdgisticsShoppingKart.Service.Interfaces
 {
     public interface IItemService
     {

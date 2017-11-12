@@ -34,7 +34,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IItemService.cs" />
+    <Compile Include="Interfaces\IOfferService.cs" />
+    <Compile Include="Interfaces\IShoppingCartItemService.cs" />
+    <Compile Include="OfferService.cs" />
+    <Compile Include="ShoppingCartItemService.cs" />
+    <Compile Include="ShoppingCartService.cs" />
+    <Compile Include="Interfaces\IShoppingCartService.cs" />
+    <Compile Include="Interfaces\IItemService.cs" />
     <Compile Include="ItemService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

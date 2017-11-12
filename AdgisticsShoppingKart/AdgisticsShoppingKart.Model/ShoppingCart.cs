@@ -5,9 +5,9 @@ namespace AdgisticsShoppingKart.Model
 {
     public class ShoppingCart
     {
-        public int Id { get; set; }
+        public string Guid { get; set; }
 
-        public IEnumerable<Item> Items { get; set; }
+        public virtual List<ShoppingCartItem> Items { get; set; }
 
         public decimal Total(IEnumerable<Offer> currentOffers)
         {

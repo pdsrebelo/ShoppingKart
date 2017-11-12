@@ -11,6 +11,5 @@ namespace AdgisticsShoppingKart.Data.Repositories
 
     public interface IItemRepository : IRepository<Item>
     {
-
     }
 }

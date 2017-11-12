@@ -1,6 +1,6 @@
-﻿namespace AdgisticsShoppingKart.Model
+﻿namespace AdgisticsShoppingKart.Models
 {
-    public class Item
+    public class ItemViewModel
     {
         public int Id { get; set; }
 
@@ -8,6 +8,6 @@
 
         public decimal Price { get; set; }
 
-        public virtual Offer Offer { get; set; }
+        public OfferViewModel  OfferView { get; set; }
     }
 }

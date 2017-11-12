@@ -2,6 +2,7 @@
 using AdgisticsShoppingKart.Data.Interfaces;
 using AdgisticsShoppingKart.Data.Repositories;
 using AdgisticsShoppingKart.Model;
+using AdgisticsShoppingKart.Service.Interfaces;
 
 namespace AdgisticsShoppingKart.Service
 {

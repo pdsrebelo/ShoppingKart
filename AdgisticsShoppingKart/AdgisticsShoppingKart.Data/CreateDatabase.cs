@@ -22,7 +22,7 @@ namespace AdgisticsShoppingKart.Data
                 new Item
                 {
                     Name = "A",
-                    Value = 5.00m,
+                    Price = 5.00m,
                     Offer = new Offer
                     {
                         Quantity = 3,
@@ -32,7 +32,7 @@ namespace AdgisticsShoppingKart.Data
                 new Item
                 {
                     Name = "B",
-                    Value = 3.00m,
+                    Price = 3.00m,
                     Offer = new Offer
                     {
                         Quantity = 2,
@@ -42,12 +42,12 @@ namespace AdgisticsShoppingKart.Data
                 new Item
                 {
                     Name = "C",
-                    Value = 2.00m
+                    Price = 2.00m
                 },
                 new Item
                 {
                     Name = "D",
-                    Value = 1.50m
+                    Price = 1.50m
                 }
             };
         }

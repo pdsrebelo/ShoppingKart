@@ -1,13 +1,11 @@
 ﻿namespace AdgisticsShoppingKart.Models
 {
-    public class ItemViewModel
+    public class ShoppingCartItemViewModel
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public decimal Value { get; set; }
-
-        public OfferViewModel  OfferView { get; set; }
+        public int Quantity { get; set; }
     }
 }

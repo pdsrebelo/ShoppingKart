@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AdgisticsShoppingKart.Model;
 using AdgisticsShoppingKart.Models;
-using AdgisticsShoppingKart.Service;
+using AdgisticsShoppingKart.Service.Interfaces;
 using AutoMapper;
 
 namespace AdgisticsShoppingKart.Controllers
@@ -13,56 +11,65 @@ namespace AdgisticsShoppingKart.Controllers
     public class HomeController : Controller
     {
         private readonly IItemService _itemService;
-        private HttpCookie _shoppingCartCookie;
+        private readonly IShoppingCartService _shoppingCartService;
+        private readonly IShoppingCartItemService _shoppingCartItemService;
 
-        public HomeController()
-        {
-            _shoppingCartCookie = SetShoppingCartCookie();
-        }
-
-        public HomeController(IItemService itemService) : this()
+        public HomeController(IItemService itemService, IShoppingCartService shoppingCartService, IShoppingCartItemService shoppingCartItemService)
         {
             _itemService = itemService;
+            _shoppingCartService = shoppingCartService;
+            _shoppingCartItemService = shoppingCartItemService;
         }
 
         public ActionResult Index()
         {
-            // Add the cookie
-            Response.Cookies.Add(_shoppingCartCookie);
-
             IEnumerable<Item> items = _itemService.GetItems().ToList();
 
             IEnumerable<ItemViewModel> modelItems = Mapper.Map<IEnumerable<Item>, IEnumerable<ItemViewModel>>(items);
 
-            return View(new ItemsAndCartViewModel
+            // Check if there's a cart for this session
+            ShoppingCart shoppingCart = _shoppingCartService.GetShoppingCart(CookieFactory.GetShoppingCartCookie(Request, Response));
+            _shoppingCartService.SaveShoppingCart();
+
+            ShoppingCartViewModel cartModel = Mapper.Map<ShoppingCart, ShoppingCartViewModel>(shoppingCart);
+
+            var model = new ItemsAndCartViewModel
             {
                 Items = modelItems,
-                ShoppingCart = new ShoppingCartViewModel()
-            });
+                ShoppingCart = cartModel
+            };
+
+            return View(model);
         }
 
-        public JsonResult AddItem(string name, int quantity)
+        public JsonResult AddItemToShoppingCart(ShoppingCartItemViewModel itemModel)
         {
+            // Check if there's a cart for this session
+            ShoppingCart shoppingCart = _shoppingCartService.GetShoppingCart(CookieFactory.GetShoppingCartCookie(Request, Response));
+
+            ShoppingCartItem item = Mapper.Map<ShoppingCartItemViewModel, ShoppingCartItem>(itemModel);
+            ShoppingCartItem retItem = _shoppingCartItemService.AddOrUpdateShoppingCartItem(item, shoppingCart.Guid);
+            _shoppingCartItemService.SaveShoppingCartItem();
+
+            ShoppingCartItemViewModel newModel = Mapper.Map<ShoppingCartItem, ShoppingCartItemViewModel>(retItem);
+
+            return Json(newModel, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult RemoveFromShoppingCart(int id)
+        {
+            // Check if there's a cart for this session
+            ShoppingCart shoppingCart = _shoppingCartService.GetShoppingCart(CookieFactory.GetShoppingCartCookie(Request, Response));
+
+            if (shoppingCart != null)
+            {
+                bool success = true; // _shoppingCartItemService.DeleteShoppingCartItemById(id);
+                _shoppingCartService.SaveShoppingCart();
+
+                return Json(new { success = success }, JsonRequestBehavior.AllowGet);
+            }
+
             return Json(null, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult RemoveItem(string name)
-        {
-            return Json(null, JsonRequestBehavior.AllowGet);
-        }
-
-        private HttpCookie SetShoppingCartCookie()
-        {
-            HttpCookie shoppingCartCookie = new HttpCookie("shoppingCartCookie");
-            DateTime now = DateTime.Now;
-
-            // Set the cookie value.
-            shoppingCartCookie.Value = now.ToString();
-
-            // Set the cookie expiration date.
-            shoppingCartCookie.Expires = now.AddYears(50);
-
-            return shoppingCartCookie;
         }
     }
 }

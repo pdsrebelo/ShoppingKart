@@ -99,6 +99,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AdgisticsShoppingKart.Service\AdgisticsShoppingKart.Service.csproj">
+      <Project>{33026C73-A7DC-459A-AB0E-334380815BB1}</Project>
+      <Name>AdgisticsShoppingKart.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AdgisticsShoppingKart\AdgisticsShoppingKart.csproj">
       <Project>{177DBD09-AE54-4538-89AF-32EB88E8D1C8}</Project>
       <Name>AdgisticsShoppingKart</Name>

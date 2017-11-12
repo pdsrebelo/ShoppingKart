@@ -10,6 +10,8 @@ namespace AdgisticsShoppingKart.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Offer> Offers { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         public virtual void Commit()
         {
@@ -20,6 +22,8 @@ namespace AdgisticsShoppingKart.Data
         {
             modelBuilder.Configurations.Add(new ItemConfiguration());
             modelBuilder.Configurations.Add(new OfferConfiguration());
+            modelBuilder.Configurations.Add(new ShoppingCartConfiguration());
+            modelBuilder.Configurations.Add(new ShoppingCartItemConfiguration());
         }
     }
 }

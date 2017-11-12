@@ -4,11 +4,13 @@ namespace AdgisticsShoppingKart.Models
 {
     public class ShoppingCartViewModel
     {
-        public IDictionary<string, ItemViewModel> Items { get; set; }
+        public IEnumerable<ShoppingCartItemViewModel> Items { get; set; }
+
+        public decimal Total { get; set; }
 
         public ShoppingCartViewModel()
         {
-            Items = new Dictionary<string, ItemViewModel>();
+            Items = new List<ShoppingCartItemViewModel>();
         }
     }
 }

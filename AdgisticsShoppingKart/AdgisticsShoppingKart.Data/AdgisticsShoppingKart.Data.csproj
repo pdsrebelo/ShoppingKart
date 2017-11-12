@@ -41,6 +41,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurations\ShoppingCartConfiguration.cs" />
+    <Compile Include="Configurations\ShoppingCartItemConfiguration.cs" />
     <Compile Include="Configurations\OfferConfiguration.cs" />
     <Compile Include="Configurations\ItemConfiguration.cs" />
     <Compile Include="CreateDatabase.cs" />
@@ -48,6 +50,8 @@
     <Compile Include="Interfaces\IDbFactory.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Repositories\ShoppingCartItemRepository.cs" />
+    <Compile Include="Repositories\ShoppingCartRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\OfferRepository.cs" />
     <Compile Include="RepositoryBase.cs" />

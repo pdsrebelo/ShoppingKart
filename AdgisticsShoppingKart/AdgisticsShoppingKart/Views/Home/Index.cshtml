@@ -23,7 +23,7 @@
                         {
                             <tr>
                                 <td>@item.Name</td>
-                                <td>@item.Value</td>
+                                <td id="price_@item.Name">@item.Price</td>
                                 @if (item.OfferView != null)
                                 {
                                     <td>@(item.OfferView.Quantity + " for " + item.OfferView.Value)</td>
@@ -32,9 +32,9 @@
                                 {
                                     <td>None</td>
                                 }
-                                @Html.HiddenFor(m => item.Id)
                                 <td>
-                                    <input id="addItem_@item.Name" type="number" min="0" step="1" class="input-sm" />
+                                    @Html.Hidden("itemId_" + item.Name, item.Id)
+                                    <input id="quantity_@item.Name" type="number" min="0" step="1" value="1" class="input-sm" />
                                     <button name="addItem" value="@item.Name" type="button" class="btn btn-sm btn-success">+</button>
                                 </td>
                             </tr>
@@ -49,24 +49,29 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Value</th>
+                            <th>Price</th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>3</td>
-                            <td>A</td>
-                            <td>13.00</td>
-                            <td>
-                                <button name="removeItem" value="" type="button" class="btn btn-sm btn-danger">-</button>
-                            </td>
-                        </tr>
+                    <tbody id="shoppingCartItems">
+                        @if (Model.ShoppingCart.Items != null)
+                        {
+                            foreach (var shoppingCartItem in Model.ShoppingCart.Items)
+                            {
+                                <tr id="shoppingCartItem_@shoppingCartItem.Id">
+                                    <td name="quantity">@shoppingCartItem.Quantity</td>
+                                    <td>@shoppingCartItem.Name</td>
+                                    <td>
+                                        <button name="removeItem" value="@shoppingCartItem.Id" type="button" class="btn btn-sm btn-danger">-</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                     <tfoot>
                         <tr>
                             <td>TOTAL</td>
-                            <td>100</td>
+                            <td>@Model.ShoppingCart.Total</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -75,32 +80,18 @@
     </div>
 </div>
 
+@Scripts.Render("~/bundles/shoppingCart")
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("button[name='addItem']").click(function() {
-            var name = $(this).val();
-            var quantity = $("#addItem_" + name).val();
-
-            if (quantity > 0) {
-                $.ajax({
-                    url: '@Url.Action("AddItem", "Home")',
-                    data: { name: name, quantity: quantity },
-                    success: function (result) {
-                        
-                    }});
-            }
+    $(document).ready(function () {
+        $("button[name='addItem']").click(function () {
+            addItemClick(
+                $(this),
+                '@Url.Action("AddItemToShoppingCart", "Home")',
+                '@Url.Action("RemoveFromShoppingCart", "Home")'
+            );
         });
-
-        $("button[name='removeItem']").click(function () {
-            console.log("Removing item: " + $(this).val());
-            var name = $(this).val();
-
-                $.ajax({
-                    url: '@Url.Action("RemoveItem", "Home")',
-                    data: { name: name },
-                    success: function (result) {
-                        
-                }});
+        $("button[name='removeItem']").click(function() {
+            removeItemClick($(this), '@Url.Action("RemoveFromShoppingCart", "Home")');
         });
     });
 </script>
