@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace AdgisticsShoppingKart.Model
 {
@@ -7,6 +6,6 @@ namespace AdgisticsShoppingKart.Model
     {
         public string Guid { get; set; }
 
-        public virtual List<ShoppingCartItem> Items { get; set; }
+        public virtual ICollection<ShoppingCartItem> Items { get; set; }
     }
 }

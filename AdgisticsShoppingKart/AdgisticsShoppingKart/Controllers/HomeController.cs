@@ -43,6 +43,7 @@ namespace AdgisticsShoppingKart.Controllers
             });
         }
 
+        // AJAX: /ShoppingCart/AddItemToShoppingCart/
         public JsonResult AddItemToShoppingCart(ShoppingCartItemViewModel itemModel)
         {
             // Check if there's a cart for this session
@@ -59,6 +60,7 @@ namespace AdgisticsShoppingKart.Controllers
             return Json(new { newModel, total = total }, JsonRequestBehavior.AllowGet);
         }
 
+        // AJAX: /ShoppingCart/RemoveFromShoppingCart/
         public JsonResult RemoveFromShoppingCart(string name)
         {
             // Check if there's a cart for this session
