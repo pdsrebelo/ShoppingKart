@@ -1,0 +1,96 @@
+﻿@model ShoppingKart.WebApp.Models.ItemsAndCartViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron col-md-7">
+                <h2>Items</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                            <th>Promotion</th>
+                            <th>Add to cart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td id="price_@item.Name">@item.Price</td>
+                                @if (item.OfferView != null)
+                                {
+                                    <td>@(item.OfferView.Quantity + " for " + item.OfferView.Value)</td>
+                                }
+                                else
+                                {
+                                    <td>None</td>
+                                }
+                                <td>
+                                    @Html.Hidden("itemId_" + item.Name, item.Id)
+                                    <input id="quantity_@item.Name" type="number" min="0" step="1" value="1" class="input-sm" />
+                                    <button name="addItem" value="@item.Name" type="button" class="btn btn-sm btn-success">+</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="jumbotron col-md-4 col-md-offset-1">
+                <h3>🛒Shopping Cart</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="shoppingCartItems">
+                        @if (Model.ShoppingCart.Items != null)
+                        {
+                            foreach (var shoppingCartItem in Model.ShoppingCart.Items)
+                            {
+                                <tr id="shoppingCartItem_@shoppingCartItem.Name">
+                                    <td name="quantity">@shoppingCartItem.Quantity</td>
+                                    <td>@shoppingCartItem.Name</td>
+                                    <td>
+                                        <button name="removeItem" value="@shoppingCartItem.Name" type="button" class="btn btn-sm btn-danger">-</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total: </td>
+                            <td id="shoppingCartTotal">@Model.Total</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/shoppingCart")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("button[name='addItem']").click(function () {
+            addItemClick(
+                $(this),
+                '@Url.Action("AddItemToShoppingCart", "Home")',
+                '@Url.Action("RemoveFromShoppingCart", "Home")');
+        });
+        $("button[name='removeItem']").click(function () {
+            removeItemClick($(this), '@Url.Action("RemoveFromShoppingCart", "Home")');
+        });
+    });
+</script>
