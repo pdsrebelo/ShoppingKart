@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using NUnit.Framework;
 using ShoppingKart.Data;
 using ShoppingKart.Service.Interfaces;
 using ShoppingKart.Tests.HelperEntities;
@@ -12,7 +12,7 @@ using ShoppingKart.WebApp.Models;
 
 namespace ShoppingKart.Tests.Controllers
 {
-    [TestClass]
+    [TestFixture]
     public class HomeControllerTest : IoCSupportedTest<BusinessLogicModule>
     {
         private IItemService _itemService;
@@ -20,7 +20,7 @@ namespace ShoppingKart.Tests.Controllers
         private IShoppingCartService _shoppingCartService;
         private IShoppingCartItemService _shoppingCartItemService;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             // Resolve autofac dependencies
@@ -36,7 +36,7 @@ namespace ShoppingKart.Tests.Controllers
             AutoMapperConfiguration.Configure();
         }
 
-        [TestCleanup]
+        [TearDown]
         public void TearDown()
         {
             _itemService = null;
@@ -50,9 +50,11 @@ namespace ShoppingKart.Tests.Controllers
             {
                 db.Database.Delete();
             }
+
+            AutoMapperConfiguration.Reset();
         }
 
-        [TestMethod]
+        [Test]
         public void Index_Test()
         {
             // Arrange
@@ -75,7 +77,7 @@ namespace ShoppingKart.Tests.Controllers
             Assert.AreEqual(jsonData.Total, 0);
         }
 
-        [TestMethod]
+        [Test]
         public void AddItemToTheShoppingCart_Test()
         {
             HomeController controller = new HomeController(_itemService, _offerService, _shoppingCartService, _shoppingCartItemService);
@@ -100,7 +102,7 @@ namespace ShoppingKart.Tests.Controllers
             Assert.AreEqual(jsonData.NewModel.Quantity, 2);
         }
 
-        [TestMethod]
+        [Test]
         public void AddItemToTheShoppingCart_Promotion_Test()
         {
             HomeController controller = new HomeController(_itemService, _offerService, _shoppingCartService, _shoppingCartItemService);
@@ -125,7 +127,7 @@ namespace ShoppingKart.Tests.Controllers
             Assert.AreEqual(jsonData.NewModel.Quantity, 3);
         }
 
-        [TestMethod]
+        [Test]
         public void RemoveFromShoppingCart_Test()
         {
             HomeController controller = new HomeController(_itemService, _offerService, _shoppingCartService, _shoppingCartItemService);

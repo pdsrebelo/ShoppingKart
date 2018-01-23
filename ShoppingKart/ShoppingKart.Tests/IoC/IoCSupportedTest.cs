@@ -11,6 +11,11 @@ namespace ShoppingKart.Tests.IoC
 
         public IoCSupportedTest()
         {
+            Build();
+        }
+
+        private void Build()
+        {
             var builder = new ContainerBuilder();
 
             builder.RegisterModule(new TModule());
@@ -22,12 +27,19 @@ namespace ShoppingKart.Tests.IoC
 
         protected TEntity Resolve<TEntity>()
         {
+            if (container == null)
+                Build();
+
             return container.Resolve<TEntity>();
         }
 
         protected void ShutdownIoC()
         {
-            container.Dispose();
+            if (container != null)
+            {
+                container.Dispose();
+                container = null;
+            }
         }
     }
 }

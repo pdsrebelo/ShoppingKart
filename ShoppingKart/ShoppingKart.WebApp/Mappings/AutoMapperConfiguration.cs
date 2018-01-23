@@ -12,5 +12,10 @@ namespace ShoppingKart.WebApp.Mappings
                 x.AddProfile<ViewModelToDomainMappingProfile>();
             });
         }
+
+        public static void Reset()
+        {
+            Mapper.Reset();
+        }
     }
 }
